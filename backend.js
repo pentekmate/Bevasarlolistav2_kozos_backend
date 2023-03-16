@@ -11,7 +11,7 @@ function kapcsolat() {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'bevasarlolista'
+    database: 'bevasarlolistav2'
   })
 }
 app.use(express.static('Kepek'))
@@ -496,6 +496,7 @@ app.post('/keszlistafrissites', (req, res) => {
   connection.end()
 
 })
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
