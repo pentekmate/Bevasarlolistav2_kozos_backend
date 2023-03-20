@@ -18,6 +18,7 @@ app.use(express.static('Kepek'))
 app.use(express.json())
 app.use(cors())
 
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -496,6 +497,46 @@ app.post('/keszlistafrissites', (req, res) => {
   connection.end()
 
 })
+app.post('/baratkereses', (req, res) => {
+  kapcsolat()
+
+  connection.query('SELECT `felhasznalo_id`, `felhasznalo_nev`, `felhasznalo_kep_id`  FROM `felhasznalo` WHERE `felhasznalo_id` like "%'+req.body.bevitel1+'%";', function (err, rows, fields) {
+    if (err)
+      console.log(err)
+    else {
+      res.send(rows)
+    }
+  })
+  connection.end()
+
+})
+app.post('/baratokinfo', (req, res) => {
+  kapcsolat()
+
+  connection.query('SELECT fhb_baratok_id,fhb_baratjelolesek_id  FROM `felhasznalo_baratinformacio` WHERE `fhb_felhasznalo_id` = "'+req.body.bevitel1+'";', function (err, rows, fields) {
+    if (err)
+      console.log(err)
+    else {
+      res.send(rows)
+    }
+  })
+  connection.end()
+
+})
+app.post('/baratjeloles', (req, res) => {
+  kapcsolat()
+
+  connection.query('INSERT INTO `felhasznalo_baratinformacio` VALUES (NULL,'+req.body.bevitel1+','+req.body.bevitel2+',"")', function (err, rows, fields) {
+    if (err)
+      console.log(err)
+    else {
+      res.send(rows)
+    }
+  })
+  connection.end()
+
+})
+
 
 
 app.listen(port, () => {
